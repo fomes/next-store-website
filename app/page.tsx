@@ -1,3 +1,9 @@
+import { Container } from "@/components/Container";
+
 export default function Home() {
-  return <main>Store</main>;
+  return (
+    <Container>
+      <div className="space-y-10 pb-10"></div>
+    </Container>
+  );
 }
