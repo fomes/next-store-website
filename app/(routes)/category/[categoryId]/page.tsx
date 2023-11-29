@@ -9,6 +9,7 @@ import { getProducts } from "@/actions/get-products";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { NoResults } from "@/components/NoResults";
 import { ProductCard } from "@/components/ProductCard";
+import { MobileFilters } from "@/components/MobileFilters";
 
 interface CategoryPageProps {
   params: {
@@ -39,6 +40,8 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
 
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
+            <MobileFilters sizes={sizes} colors={colors} />
+
             <div className="hidden lg:block">
               <CategoryFilter valueKey="sizeId" name="Sizes" data={sizes} />
               <CategoryFilter valueKey="colorId" name="Colors" data={colors} />
