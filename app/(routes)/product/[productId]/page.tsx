@@ -14,7 +14,7 @@ interface ProductDetailsProps {
 
 const ProductDetails = async ({ params }: ProductDetailsProps) => {
   const product = await getProduct(params.productId);
-  const suggestedProducts = await getProducts({
+  const suggestedItems = await getProducts({
     categoryId: product?.category?.id,
   });
 
@@ -31,7 +31,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           </div>
 
           <hr className="my-10" />
-          <ProductList title="Related Items" items={suggestedProducts} />
+          <ProductList title="Related Items" items={suggestedItems} />
         </div>
       </Container>
     </div>

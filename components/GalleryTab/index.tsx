@@ -9,11 +9,7 @@ interface GalleryTabProps {
 
 export function GalleryTab({ image }: GalleryTabProps) {
   return (
-    <Tab
-      className={
-        "relative flex aspect-square cursor-pointer items-center justify-center rounded-md bg-white"
-      }
-    >
+    <Tab className="relative flex aspect-square cursor-pointer items-center justify-center rounded-md bg-white">
       {({ selected }) => (
         <div>
           <span className="absolute h-full w-full aspect-square inset-0 overflow-hidden rounded-md">
