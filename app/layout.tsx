@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import ModalProvider from "@/providers/modal-provider";
 
 import "./globals.css";
+import { ToastProvider } from "@/components/ToastProvider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ModalProvider />
+        <ToastProvider />
         <Navbar />
         {children}
         <Footer />

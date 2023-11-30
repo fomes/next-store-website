@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, ReactNode, useRef } from "react";
+import { Fragment, ReactNode } from "react";
 
 import { X } from "lucide-react";
 
@@ -43,7 +43,6 @@ export default function Modal({ open, onClose, children }: ModalProps) {
           </div>
         </div>
       </Dialog>
-      //{" "}
     </Transition>
   );
 }
