@@ -3,34 +3,43 @@
 import axios from "axios";
 
 import useCart from "@/hooks/use-cart";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "../Button";
 import { Currency } from "../Currency";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Spinner } from "../Spinner";
 
 export function Summary() {
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
 
   const onCheckout = async () => {
-    const resp = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-      { productIds: items.map((item) => item.id) }
-    );
+    try {
+      setIsLoading(true);
+      const resp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        { productIds: items.map((item) => item.id) }
+      );
 
-    window.location = resp.data.url;
+      window.location = resp.data.url;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     if (searchParams.get("success")) {
       toast.success("Payment completed");
+      router.push("/cart");
       removeAll();
     }
 
@@ -48,8 +57,12 @@ export function Summary() {
           <Currency value={totalPrice} />
         </div>
       </div>
-      <Button onClick={onCheckout} className="w-full mt-6">
-        Checkout
+      <Button
+        onClick={onCheckout}
+        className="w-full mt-6 flex justify-center"
+        disabled={items.length === 0}
+      >
+        {isLoading ? <Spinner /> : "Checkout"}
       </Button>
     </div>
   );

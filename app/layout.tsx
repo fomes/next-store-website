@@ -7,6 +7,7 @@ import ModalProvider from "@/providers/modal-provider";
 
 import "./globals.css";
 import { ToastProvider } from "@/components/ToastProvider";
+import { cn } from "@/lib/utils";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={cn(font.className, "min-h-screen relative")}>
         <ModalProvider />
         <ToastProvider />
         <Navbar />
