@@ -43,8 +43,8 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
             <MobileFilters sizes={sizes} colors={colors} />
 
             <div className="hidden lg:block">
-              <CategoryFilter valueKey="sizeId" name="Sizes" data={sizes} />
-              <CategoryFilter valueKey="colorId" name="Colors" data={colors} />
+              <CategoryFilter valueKey="sizeId" name="Tamanhos" data={sizes} />
+              <CategoryFilter valueKey="colorId" name="Cores" data={colors} />
             </div>
 
             <div className="mt-6 lg:col-span-4 lg:mt-0">

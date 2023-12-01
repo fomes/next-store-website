@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Store E-commerce",
+  title: "Loja",
+  description: "Loja E-commerce",
 };
 
 export default function RootLayout({

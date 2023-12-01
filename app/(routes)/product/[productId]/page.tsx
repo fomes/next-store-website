@@ -31,7 +31,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           </div>
 
           <hr className="my-10" />
-          <ProductList title="Related Items" items={suggestedItems} />
+          <ProductList title="Items Relacionados" items={suggestedItems} />
         </div>
       </Container>
     </div>

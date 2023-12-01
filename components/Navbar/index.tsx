@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Redressed } from "next/font/google";
-
-import { Container } from "../Container";
-import { MainNav } from "../MainNav";
 import { getCategories } from "@/actions/get-categories";
+import { MainNav } from "../MainNav";
+import { Container } from "../Container";
 import { NavbarActions } from "../NavbarActions";
 
 const font = Redressed({ subsets: ["latin"], weight: "400" });

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Billboard as BillboardType } from "@/types";
 
 interface BillboardProps {
@@ -6,7 +7,7 @@ interface BillboardProps {
 
 export function Billboard({ data }: BillboardProps) {
   return (
-    <div className=" p-4 sm:p-6 lg:p-8 rounded-xl overflow-hidden">
+    <div className={cn("p-4 sm:p-6 lg:p-8 rounded-xl overflow-hidden")}>
       <div
         style={{ backgroundImage: `url(${data?.imageUrl})` }}
         className="rounded-xl relative aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover"
