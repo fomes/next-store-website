@@ -44,9 +44,10 @@ export function Summary() {
     }
 
     if (searchParams.get("canceled")) {
-      toast.error("Algo deu errado");
+      toast.error("Transação não concluída!");
+      router.push("/cart");
     }
-  }, [searchParams, removeAll]);
+  }, [searchParams, removeAll, router]);
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -60,7 +61,7 @@ export function Summary() {
       <Button
         onClick={onCheckout}
         className="w-full mt-6 flex justify-center"
-        disabled={items.length === 0}
+        disabled={items.length === 0 || isLoading}
       >
         {isLoading ? <Spinner /> : "Confirmar"}
       </Button>

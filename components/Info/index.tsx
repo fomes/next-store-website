@@ -40,10 +40,26 @@ export function Info({ data }: InfoProps) {
             style={{ backgroundColor: data?.color?.value }}
           ></div>
         </div>
+
+        <div className="flex items-center gap-x-4">
+          {data?.stock! > 0 ? (
+            <h3 className="font-medium text-zinc-100 bg-lime-500 px-4 rounded-xl">
+              Disponível
+            </h3>
+          ) : (
+            <h3 className="font-medium text-zinc-100 bg-red-500 px-4 rounded-xl">
+              Esgotado
+            </h3>
+          )}
+        </div>
       </div>
 
       <div className="mt-10 flex items-center gap-x-3">
-        <Button onClick={onAddToCart} className="flex items-center gap-x-2">
+        <Button
+          onClick={onAddToCart}
+          disabled={data?.stock! < 1}
+          className="flex items-center gap-x-2"
+        >
           Comprar
           <ShoppingCart />
         </Button>
