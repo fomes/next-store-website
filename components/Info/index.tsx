@@ -4,17 +4,20 @@ import { Product } from "@/types";
 import { Currency } from "../Currency";
 import { Button } from "../Button";
 import { ShoppingCart } from "lucide-react";
-import useCart from "@/hooks/use-cart";
+import { useDispatch } from "react-redux";
+import { addProduct } from "@/redux/cart/slice";
+import toast from "react-hot-toast";
 
 interface InfoProps {
   data: Product;
 }
 
 export function Info({ data }: InfoProps) {
-  const cart = useCart();
+  const dispatch = useDispatch();
 
-  const onAddToCart = () => {
-    cart.addItem(data);
+  const handleAddToCart = () => {
+    dispatch(addProduct(data));
+    toast.success("Adicionado ao carrinho");
   };
 
   return (
@@ -56,7 +59,7 @@ export function Info({ data }: InfoProps) {
 
       <div className="mt-10 flex items-center gap-x-3">
         <Button
-          onClick={onAddToCart}
+          onClick={handleAddToCart}
           disabled={data?.stock! < 1}
           className="flex items-center gap-x-2"
         >

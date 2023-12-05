@@ -3,17 +3,18 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import { ShoppingBag } from "lucide-react";
-import useCart from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
+import { selectProductsCount } from "@/redux/cart/cartSelectors";
+import { useSelector } from "react-redux";
 
 export function NavbarActions() {
   const [isMounted, setIsMounted] = useState(false);
+  const productsCount = useSelector(selectProductsCount);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const cart = useCart();
   const router = useRouter();
 
   if (!isMounted) {
@@ -28,7 +29,7 @@ export function NavbarActions() {
       >
         <ShoppingBag size={20} color="white" />
         <span className="ml-2 text-sm font-medium text-white">
-          {cart.items.length}
+          {productsCount}
         </span>
       </Button>
     </div>

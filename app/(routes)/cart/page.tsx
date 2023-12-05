@@ -3,12 +3,17 @@
 import { CartItem } from "@/components/CartItem";
 import { Container } from "@/components/Container";
 import { Summary } from "@/components/Summary";
-import useCart from "@/hooks/use-cart";
+import { Product } from "@/types";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+export interface CartPageProps {
+  cart: Product[];
+}
 
 export default function CartPage() {
   const [isMounted, setIsMounted] = useState(false);
-  const cart = useCart();
+  const { products } = useSelector((rootReducer: any) => rootReducer.cartSlice);
 
   useEffect(() => {
     setIsMounted(true);
@@ -26,12 +31,12 @@ export default function CartPage() {
 
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12">
             <div className="lg:col-span-7">
-              {cart.items.length === 0 && (
+              {products.length === 0 && (
                 <p className="text-neutral-500">Seu carrinho está vazio</p>
               )}
 
               <ul>
-                {cart.items.map((item) => (
+                {products.map((item: Product) => (
                   <CartItem key={item.id} data={item} />
                 ))}
               </ul>

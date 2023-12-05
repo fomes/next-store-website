@@ -1,23 +1,40 @@
 "use client";
 
 import { X } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 import Image from "next/image";
 import { Product } from "@/types";
+import {
+  decreaseProductQtd,
+  increaseProductQtd,
+  removeProduct,
+} from "@/redux/cart/slice";
 
-import { IconButton } from "../IconButton";
 import { Currency } from "../Currency";
-import useCart from "@/hooks/use-cart";
+import { IconButton } from "../IconButton";
+import toast from "react-hot-toast";
 
 interface CartItemProps {
   data: Product;
 }
 
 export function CartItem({ data }: CartItemProps) {
-  const cart = useCart();
+  const dispatch = useDispatch();
 
-  const onRemove = () => {
-    cart.removeItem(data.id);
+  const handleIncreaseClick = () => {
+    dispatch(increaseProductQtd(data.id));
+  };
+
+  const handleDecreaseClick = () => {
+    if (data.quantity! > 1) {
+      dispatch(decreaseProductQtd(data.id));
+    }
+  };
+
+  const handleDeleteCartItem = () => {
+    dispatch(removeProduct(data.id));
+    toast.success("Produto removido.");
   };
 
   return (
@@ -34,7 +51,7 @@ export function CartItem({ data }: CartItemProps) {
 
         <div className="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6">
           <div className="absolute z-10 right-0 top-0">
-            <IconButton onClick={onRemove} icon={<X size={15} />} />
+            <IconButton onClick={handleDeleteCartItem} icon={<X size={15} />} />
           </div>
 
           <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
@@ -48,7 +65,29 @@ export function CartItem({ data }: CartItemProps) {
                 {data.size.name}
               </p>
             </div>
-            <Currency value={data.price} />
+
+            <div>
+              <Currency value={data.price} />
+              <div className="mt-1">
+                <p className="text-sm">Quantidade</p>
+
+                <div className="flex justify-center items-center gap-2 border w-20 rounded-lg">
+                  <span
+                    className="px-2 cursor-pointer font-semibold"
+                    onClick={handleDecreaseClick}
+                  >
+                    -
+                  </span>
+                  <span className="text-sm">{data.quantity}</span>
+                  <span
+                    className="px-2 cursor-pointer font-semibold"
+                    onClick={handleIncreaseClick}
+                  >
+                    +
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </li>

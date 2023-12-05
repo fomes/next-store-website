@@ -10,26 +10,31 @@ import { Currency } from "../Currency";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Spinner } from "../Spinner";
+import { useSelector } from "react-redux";
+import { selectTotalPrice } from "@/redux/cart/cartSelectors";
+import { Product } from "@/types";
 
 export function Summary() {
-  const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price);
-  }, 0);
+  const totalPrice = useSelector(selectTotalPrice);
+  const { products } = useSelector((rootReducer: any) => rootReducer.cartSlice);
 
   const onCheckout = async () => {
+    const payload = products.map((item: Product) => ({
+      id: item.id,
+      qtd: item.quantity,
+    }));
+
     try {
       setIsLoading(true);
       const resp = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-        { productIds: items.map((item) => item.id) }
+        { productsArr: payload }
       );
-
       window.location = resp.data.url;
     } catch (err) {
       console.log(err);
@@ -61,7 +66,7 @@ export function Summary() {
       <Button
         onClick={onCheckout}
         className="w-full mt-6 flex justify-center"
-        disabled={items.length === 0 || isLoading}
+        disabled={products.length === 0 || isLoading}
       >
         {isLoading ? <Spinner /> : "Confirmar"}
       </Button>

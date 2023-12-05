@@ -1,13 +1,14 @@
 import type, { Metadata } from "next";
 
+import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import ModalProvider from "@/providers/modal-provider";
+import { ToastProvider } from "@/components/ToastProvider";
+import { ClientProvider } from "@/components/ClientProvider";
 
 import "./globals.css";
-import { ToastProvider } from "@/components/ToastProvider";
-import { cn } from "@/lib/utils";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -22,14 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={cn(font.className, "min-h-screen relative")}>
-        <ModalProvider />
-        <ToastProvider />
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <ClientProvider>
+      <html lang="en">
+        <body className={cn(font.className, "min-h-screen relative")}>
+          <ModalProvider />
+          <ToastProvider />
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </ClientProvider>
   );
 }

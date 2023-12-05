@@ -2,17 +2,18 @@
 
 import { MouseEventHandler } from "react";
 
-import { Expand, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 
 import Image from "next/image";
 import { Product } from "@/types";
 import { useRouter } from "next/navigation";
-import usePreviewModal from "@/hooks/use-preview-modal";
 
 import { Currency } from "../Currency";
 import { IconButton } from "../IconButton";
-import useCart from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { addProduct } from "@/redux/cart/slice";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   data: Product;
@@ -20,24 +21,17 @@ interface ProductCardProps {
 
 export function ProductCard({ data }: ProductCardProps) {
   const router = useRouter();
-  const cart = useCart();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     router.push(`/product/${data?.id}`);
   };
 
-  const previewModal = usePreviewModal();
-
-  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
 
-    previewModal.onOpen(data);
-  };
-
-  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
-    cart.addItem(data);
+    dispatch(addProduct(data));
+    toast.success("Adicionado ao carrinho");
   };
 
   return (
@@ -58,14 +52,9 @@ export function ProductCard({ data }: ProductCardProps) {
 
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">
-            {/* <IconButton
-              icon={<Expand size={20} className="text-gray-600" />}
-              onClick={onPreview}
-            /> */}
-
             <IconButton
               icon={<ShoppingCart size={20} className="text-gray-600" />}
-              onClick={onAddToCart}
+              onClick={handleAddToCart}
               disabled={data?.stock! < 1}
             />
           </div>
