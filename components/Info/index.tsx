@@ -45,13 +45,13 @@ export function Info({ data }: InfoProps) {
         </div>
 
         <div className="flex items-center gap-x-4">
-          {data?.stock! > 0 ? (
-            <h3 className="font-medium text-zinc-100 bg-lime-500 px-4 rounded-xl">
-              Disponível
-            </h3>
-          ) : (
+          {data.stock! < 1 ? (
             <h3 className="font-medium text-zinc-100 bg-red-500 px-4 rounded-xl">
               Esgotado
+            </h3>
+          ) : (
+            <h3 className="font-medium text-zinc-100 bg-lime-500 px-4 rounded-xl">
+              Disponível
             </h3>
           )}
         </div>
@@ -60,7 +60,7 @@ export function Info({ data }: InfoProps) {
       <div className="mt-10 flex items-center gap-x-3">
         <Button
           onClick={handleAddToCart}
-          disabled={data?.stock! < 1}
+          disabled={data.stock! < 1}
           className="flex items-center gap-x-2"
         >
           Comprar

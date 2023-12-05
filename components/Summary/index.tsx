@@ -1,8 +1,6 @@
 "use client";
 
 import axios from "axios";
-
-import useCart from "@/hooks/use-cart";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "../Button";
@@ -15,7 +13,6 @@ import { selectTotalPrice } from "@/redux/cart/cartSelectors";
 import { Product } from "@/types";
 
 export function Summary() {
-  const removeAll = useCart((state) => state.removeAll);
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -45,14 +42,13 @@ export function Summary() {
     if (searchParams.get("success")) {
       toast.success("Pagamento confirmado");
       router.push("/cart");
-      removeAll();
     }
 
     if (searchParams.get("canceled")) {
       toast.error("Transação não concluída!");
       router.push("/cart");
     }
-  }, [searchParams, removeAll, router]);
+  }, [searchParams, router]);
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">

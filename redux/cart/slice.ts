@@ -20,8 +20,12 @@ const cartSlice = createSlice({
 
       if (productInCart) {
         state.products = state.products.map((product: Product) =>
-          product.id === action.payload.id
-            ? { ...product, quantity: product.quantity! + 1 }
+          product.id === action.payload.id && product.stock! > 1
+            ? {
+                ...product,
+                quantity: product.quantity! + 1,
+                stock: product.stock! - 1,
+              }
             : product
         );
 
@@ -36,8 +40,12 @@ const cartSlice = createSlice({
       action: PayloadAction<String>
     ) => {
       state.products = state.products.map((product: Product) =>
-        product.id === String(action.payload)
-          ? { ...product, quantity: product.quantity! + 1 }
+        product.id === String(action.payload) && product.stock! > 1
+          ? {
+              ...product,
+              quantity: product.quantity! + 1,
+              stock: product.stock! - 1,
+            }
           : product
       );
     },

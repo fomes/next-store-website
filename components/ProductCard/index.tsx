@@ -39,7 +39,7 @@ export function ProductCard({ data }: ProductCardProps) {
       onClick={handleClick}
       className={cn(
         "bg-white group cursor-pointer rounded-xl border p-3 space-y-4",
-        data?.stock! < 1 && "opacity-60"
+        data.stock! < 1 && "opacity-60"
       )}
     >
       <div className="aspect-square rounded-xl bg-gray-100 relative">
@@ -55,7 +55,7 @@ export function ProductCard({ data }: ProductCardProps) {
             <IconButton
               icon={<ShoppingCart size={20} className="text-gray-600" />}
               onClick={handleAddToCart}
-              disabled={data?.stock! < 1}
+              disabled={data.stock! < 1}
             />
           </div>
         </div>
@@ -67,13 +67,13 @@ export function ProductCard({ data }: ProductCardProps) {
       </div>
 
       <div className="flex items-center gap-x-4">
-        {data?.stock! > 0 ? (
-          <h3 className="font-medium text-[0.80rem] text-zinc-100 bg-lime-500 px-4 rounded-xl">
-            Disponível
-          </h3>
-        ) : (
+        {data.stock! < 1 ? (
           <h3 className="font-medium text-[0.80rem] text-zinc-100 bg-red-500 px-4 rounded-xl">
             Esgotado
+          </h3>
+        ) : (
+          <h3 className="font-medium text-[0.80rem] text-zinc-100 bg-lime-500 px-4 rounded-xl">
+            Disponível
           </h3>
         )}
       </div>
